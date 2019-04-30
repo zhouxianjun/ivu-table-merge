@@ -1,0 +1,12 @@
+{
+    "presets": [
+        ["@vue/app", {
+            "polyfills": [
+                "es6.promise",
+                "es6.symbol",
+                "es7.array.flat-map"
+            ]
+        }]
+    ],
+    "plugins": ["@babel/plugin-proposal-optional-chaining"]
+}
