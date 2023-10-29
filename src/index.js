@@ -1,5 +1,9 @@
 import { rowSpanTable } from './util';
+const TASK_SCOPED = '__merge_cell_task__';
+const clearTask = (id) => (window.clearImmediate || window.clearTimeout)(id);
+const addTask = (fn, delay = 100) => (window.setImmediate || window.setTimeout)(fn, delay);
 const apply = (el, binding) => {
+    const { delay = 100 } = binding.value;
     let { cell, columns, data } = binding.value;
     cell = !cell ? null : Array.isArray(cell) ? cell : [ cell ];
     if (!cell || !cell[0]) {
@@ -11,15 +15,15 @@ const apply = (el, binding) => {
     if (!data?.length || !columns?.length) {
         return;
     }
-    clearImmediate(binding.def.task);
-    binding.def.task = setImmediate(() => {
+    clearTask(el[TASK_SCOPED]);
+    el[TASK_SCOPED] = addTask(() => {
         const { length } = el.getElementsByClassName('ivu-table-row');
         if (length !== data.length) {
             return;
         }
         rowSpanTable(el, Array.isArray(cell) ? cell : [ cell ], data, columns);
-        clearImmediate(binding.def.task);
-    }, 100);
+        clearTask(el[TASK_SCOPED]);
+    }, delay);
 };
 export default {
     bind (el, binding) {
