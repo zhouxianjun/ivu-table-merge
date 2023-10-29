@@ -1,6 +1,6 @@
 {
   "name": "ivu-table-merge",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/ivu-table-merge.umd.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
